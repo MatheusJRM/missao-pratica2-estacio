@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./ordenando.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <title>Ordenando com JS</title>
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <header class="p-3">
+      <h1>Ordenando Valores</h1>
+    </header>
+    <main class="p-3">
+      <label for="valor" class="form-label">Valor</label>
+      <input
+        type="number"
+        class="form-control"
+        id="valor"
+        name="valor"
+        placeholder="Valor numérico"
+        required
+      />
+      <button class="btn btn-primary mt-3" onclick="add()">Adicionar</button>
+      <hr class="my-4" />
+      <select
+        id="algoritmo"
+        class="form-select mt-3"
+        aria-label="Selecione uma opção"
+      >
+        <option selected value="bubbleSort">Blubble Sort</option>
+        <option value="selectionSort">Selection Sort</option>
+        <option value="quickSort">Quick Sort</option>
+      </select>
+      <button class="btn btn-primary mt-3" onclick="ordenar()">Ordernar</button>
+      <button class="btn btn-primary mt-3 ms-2" onclick="misturar()">
+        Misturar
+      </button>
+      <hr class="my-4" />
+      <ul id="valores"></ul>
+    </main>
+    <script>
+      function add() {
+        let inputField = document.getElementById("valor");
+        let list = document.getElementById("valores");
+        let node = document.createElement("li");
+        let textNode = document.createTextNode(inputField.value);
+        node.appendChild(textNode);
+        list.appendChild(node);
+        misturar();
+      }
+
+      function ordenar() {
+        let list = document.getElementById("valores");
+        let algoritmo = document.getElementById("algoritmo").value;
+        let arr = Array.from(list.children).map((item) =>
+          parseInt(item.innerText)
+        );
+        switch (algoritmo) {
+          case "bubbleSort":
+            bubbleSort(arr);
+            break;
+          case "selectionSort":
+            selectionSort(arr);
+            break;
+          case "quickSort":
+            quickSort(arr);
+            break;
+          default:
+            break;
+        }
+        list.innerHTML = arr.map((item) => `<li>${item}</li>`).join("");
+      }
+
+      function misturar() {
+        let list = document.getElementById("valores");
+        let arr = Array.from(list.children).map((item) =>
+          parseInt(item.innerText)
+        );
+        shuffle(arr, arr.length * 2);
+        list.innerHTML = arr.map((item) => `<li>${item}</li>`).join("");
+      }
+    </script>
+  </body>
+</html>
