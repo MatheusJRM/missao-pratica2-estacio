@@ -22,7 +22,6 @@
         id="valor"
         name="valor"
         placeholder="Valor numérico"
-        required
       />
       <button class="btn btn-primary mt-3" onclick="add()">Adicionar</button>
       <hr class="my-4" />
@@ -47,10 +46,14 @@
         let inputField = document.getElementById("valor");
         let list = document.getElementById("valores");
         let node = document.createElement("li");
-        let textNode = document.createTextNode(inputField.value);
-        node.appendChild(textNode);
-        list.appendChild(node);
-        misturar();
+        if (inputField.value != "") {
+          let textNode = document.createTextNode(inputField.value);
+          node.appendChild(textNode);
+          list.appendChild(node);
+          misturar();
+        } else {
+          alert("Adicione um valor válido!");
+        }
       }
 
       function ordenar() {
